@@ -19,23 +19,22 @@ defmodule Advent1 do
     |> Enum.map(&String.to_integer/1)
   end
 
-
   ############
   # PART 2
   ############
   def part2 do
 
-    calculateFuel(12)
+    fuel = readFile
+    |> Enum.map(&calculateFuel(&1) - &1)
+    |> Enum.sum
+
+    IO.puts "Fuel for santa #{fuel}"
 
   end
+
+  def calculateFuel(mass) when mass <= 0, do: 0
 
   def calculateFuel(mass) do
-
-    m = mass / 3
-    m = Float.floor(m, 0)
-    m = m - 2
-
+    mass + calculateFuel( Float.floor(mass / 3, 0) - 2)
   end
-
-
 end
