@@ -5,6 +5,6 @@ defmodule Advent2Test do
   test "part1" do
     result = Advent2.part1()
     IO.inspect result
-    assert result == [30,1,1,4,2,5,6,0,99]
+    assert result |> Enum.at(0) == 2894520
   end
 end
