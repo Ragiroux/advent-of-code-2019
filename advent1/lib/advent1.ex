@@ -13,12 +13,6 @@ defmodule Advent1 do
     |> Enum.sum
   end
 
-  def readFile do
-    File.stream!("input.txt")
-    |> Stream.map( &(String.replace(&1, "\n", "")) )
-    |> Enum.map(&String.to_integer/1)
-  end
-
   ############
   # PART 2
   ############
@@ -38,5 +32,11 @@ defmodule Advent1 do
 
   def calculateFuel(mass) do
     mass + calculateFuel( Float.floor(mass / 3, 0) - 2)
+  end
+
+  def readFile do
+    File.stream!("input.txt")
+    |> Stream.map( &(String.replace(&1, "\n", "")) )
+    |> Enum.map(&String.to_integer/1)
   end
 end
