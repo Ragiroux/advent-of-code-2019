@@ -1,4 +1,6 @@
 defmodule Advent1Test do
+  require Timeframe
+
   use ExUnit.Case
   doctest Advent1
 
@@ -6,7 +8,7 @@ defmodule Advent1Test do
     Advent1.readFile()
   end
 
-  test "fuel for santa" do
+  Timeframe.execute "part2" do
     result = Advent1.part2()
     assert 4925580.0 == result
   end
