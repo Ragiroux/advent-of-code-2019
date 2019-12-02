@@ -30,6 +30,8 @@ defmodule Advent1 do
 
     IO.puts "Fuel for santa #{fuel}"
 
+    fuel
+
   end
 
   def calculateFuel(mass) when mass <= 0, do: 0
