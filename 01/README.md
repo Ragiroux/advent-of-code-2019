@@ -2,4 +2,4 @@
 
 ## Advent 1
 
-
+mix test
