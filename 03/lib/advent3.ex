@@ -1,18 +1,19 @@
 defmodule Advent3 do
-  @moduledoc """
-  Documentation for Advent3.
-  """
 
-  @doc """
-  Hello world.
+  def part1 do
+    cable1 = readFile("input1.txt")
+    cable2 = readFile("input2.txt")
 
-  ## Examples
-
-      iex> Advent3.hello()
-      :world
-
-  """
-  def hello do
-    :world
+    cable1 |> IO.puts
+    cable2 |> IO.puts
   end
+
+  def moveCable(cable, coord) do
+    
+  end
+
+  def readFile(filename) do
+    File.read!(filename)
+  end
+
 end
