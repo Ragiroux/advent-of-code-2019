@@ -2,24 +2,25 @@ from Point import Point
 
 def main():
 
-  cable1 =  open("input1.txt", "r").read().split(",")
-  cable2 =  open("input2.txt", "r").read().split(",")
+  cable1 = readFile("input1.txt")
+  cable2 = readFile("input2.txt")
 
-  cableCoordinate1 = []
-  cableCoordinate2 = []
-  dest = []
+  path1 = []
+  path2 = []
 
-  xyz(cable1, Point(0,0), 0, dest)
+  calculatePath(cable1, Point(0,0), 0, path1)
+  calculatePath(cable2, Point(0,0), 0, path2)
 
-  for c in cable1:
-    cableCoordinate1.append(addToPointList(c)) 
+  print("path1 : ", path1)
+  print("path2 : ", path2)
 
-  for c in cable2:
-    cableCoordinate2.append(addToPointList(c))
+#
+# Calculate all points and add the previous point
+#
+def calculatePath(list, previous, next, dest):
 
-  print(cableCoordinate2)
-
-def xyz(list, previous, next, dest):
+    if len(list) == len(dest):
+        return dest   
 
     op = list[next][0]
 
@@ -28,24 +29,14 @@ def xyz(list, previous, next, dest):
     if op == 'L':
         dest.append(Point(-int(list[next][1:]) + previous.getX(), 0 + previous.getY()))
     if op == 'U':
-        dest.append(Point(0 + previous.getX(), int(list[next][1:] + previous.getY())))
+        dest.append(Point(0 + previous.getX(), int(list[next][1:]) + previous.getY()))
     if op == 'D':
-         dest.append(Point(0 + previous.getX(), -int(list[next][1:] + previous.getY())))
+         dest.append(Point(0 + previous.getX(), -int(list[next][1:]) + previous.getY()))
 
-    xyz(list,dest[-1],next+1, dest)      
+    calculatePath(list,dest[-1],next+1, dest)
 
-
-def addToPointList(cablePoint):
-    op = cablePoint[0]
-
-    if op == 'R':
-        return Point(int(cablePoint[1:]),0)
-    if op == 'L':
-        return Point(-int(cablePoint[1:]),0)
-    if op == 'U':
-        return Point(0,int(cablePoint[1:]))
-    if op == 'D':
-         return Point(0,-int(cablePoint[1:]))
+def readFile(filename):
+    return open(filename, "r").read().split(",")
 
 if __name__== "__main__":
   main()
