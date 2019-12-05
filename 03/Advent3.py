@@ -2,8 +2,8 @@ from Point import Point
 
 def main():
 
-  cable1 = readFile("input1.txt")
-  cable2 = readFile("input2.txt")
+  cable1 = readFile("input1test.txt")
+  cable2 = readFile("input2test.txt")
 
   path1 = []
   path2 = []
