@@ -13,17 +13,18 @@ def main():
     calculatePath(cable1, Point(0,0), 0, path1)
     calculatePath(cable2, Point(0,0), 0, path2)
 
-    print("cable 1 : ", path1)
-    print("cable 2 : ", path2)
+    print(path1)
+    print(path2)
 
-    for i in range(0, len(path1)-1):
-        for j in range(0, len(path2)-1):
+    for i in range(1, len(path1) - 1):
+        for j in range(1, len(path2) - 1):
             collission = lineLineCollision(path1[i], path1[i+1], path2[j], path2[j+1])
             if collission :
                 intersection.append(Intersection(path1[i], path1[i+1], path2[j], path2[j+1]))
 
     for i in intersection:
         print("Intersection : ", i)
+        print("Intersection point : ", i.getIntersectionPoint())
         print("Manhattan distance : ", manhattanDistance(i.getIntersectionPoint()))
 
 

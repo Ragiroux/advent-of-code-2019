@@ -21,17 +21,34 @@ class Intersection(object):
         return self.P4
 
     def getIntersectionPoint(self):
-        #denominator = (self.P1.getX() - self.P2.getX()) * (self.P3.getY() - self.P4.getY()) - (self.P1.getY() - self.P2.getY()) * (self.P3.getX() - self.P4.getX())
-        #print("denominator: ", denominator)
-        t = ((self.P1.getX() - self.P3.getX()) * (self.P3.getY() - self.P4.getY())) - ((self.P1.getY() - self.P3.getY())*(self.P3.getX() - self.P4.getX())) / (((self.P1.getX() - self.P2.getX())*(self.P3.getY() - self.P4.getY())) - ((self.P1.getY() - self.P2.getY())*(self.P3.getX() - self.P4.getX())))
-        u = ((self.P1.getX() - self.P2.getX())*(self.P1.getY() - self.P3.getY())) - ((self.P1.getY() - self.P2.getY())*(self.P1.getX() - self.P3.getX())) / (((self.P1.getX() - self.P2.getX())*(self.P3.getY() - self.P4.getY())) - ((self.P1.getY() - self.P2.getY())*(self.P3.getX() - self.P4.getX())))
-        print("t: ", t)
-        print("u: ", u)
-        ix = self.P1.getX() + t * (self.P2.getX() - self.P1.getX())
-        iy = self.P1.getY() + t * (self.P2.getY() - self.P1.getY())
+        x1 = self.P1.getX()
+        y1 = self.P1.getY()
+        x2 = self.P2.getX()
+        y2 = self.P2.getY()
+        x3 = self.P3.getX()
+        y3 = self.P3.getY()
+        x4 = self.P4.getX()
+        y4 = self.P4.getY()
 
-        return Point(ix,iy)
+        dx1 = x2-x1
+        dy1 = y2-y1
+        dx2 = x4-x3
+        dy2 = y4-y3
+        
+        det = (-dx1 * dy2 + dy1 * dx2)
 
+        if det == 0:
+            return Point(0,0)
+
+        DETinv = 1.0/det
+
+        r = DETinv * (-dy2 * (x2-x1) + dx2 * (y2-y1))
+        s = DETinv * (-dy1 * (x2-x1) + dx1 * (y2-y1))
+        
+        ix = (x1 + r*dx1 + x2 + s*dx2)/2.0
+        iy = (y1 + r*dy1 + y2 + s*dy2)/2.0
+
+        return Point(ix, iy)
 
     def __repr__(self):
         return str(self.getPoint1()) + " " + str(self.getPoint2()) + " " + str(self.getPoint3()) + " " + str(self.getPoint4())
