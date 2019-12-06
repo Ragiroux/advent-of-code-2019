@@ -11,4 +11,4 @@ class Point(object):
         return int(self.Y)
 
     def __repr__(self):
-        return "X:" + str(self.getX()) + " y:" + str(self.getY())
+        return "(" + str(self.getX()) + ", " + str(self.getY()) + ")"
