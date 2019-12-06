@@ -42,11 +42,11 @@ class Intersection(object):
 
         DETinv = 1.0/det
 
-        r = DETinv * (-dy2 * (x2-x1) + dx2 * (y2-y1))
-        s = DETinv * (-dy1 * (x2-x1) + dx1 * (y2-y1))
+        r = DETinv * (-dy2 * (x3-x1) + dx2 * (y3-y1))
+        s = DETinv * (-dy1 * (x3-x1) + dx1 * (y3-y1))
         
-        ix = (x1 + r*dx1 + x2 + s*dx2)/2.0
-        iy = (y1 + r*dy1 + y2 + s*dy2)/2.0
+        ix = (x1 + r*dx1 + x3 + s*dx2)/2.0
+        iy = (y1 + r*dy1 + y3 + s*dy2)/2.0
 
         return Point(ix, iy)
 
