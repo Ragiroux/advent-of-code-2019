@@ -8,7 +8,6 @@ def main():
         if ok:
             differentPassword.append(i)
 
-    print(differentPassword)
     print(len(differentPassword))
 
 def digitAlwaysIncrease(password):
@@ -19,12 +18,10 @@ def digitAlwaysIncrease(password):
     return ok == 6
     
 def atLeastTwoSameDigit(password):
-    ok = False
     for i in range(0, len(password)):
-        if password.count(str(password[i])):
-            ok = True
-    return ok
-
+        if password.count(str(password[i])) == 2:
+           return True
+    return False
 
 def readFile(filename):
     return open(filename, "r").read().split("-")
