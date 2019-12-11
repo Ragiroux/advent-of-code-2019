@@ -8,19 +8,6 @@ def main():
     max = deployMonitoringStation(grid)
     print("maximum asteroids found : ", max)
 
-
-def initializeGrid(input):
-
-    w = len(input[0])
-    h = len(input)
-    grid = [[0 for x in range(w)] for y in range(h)]
-
-    for i in range(h):
-        for j in range(w):
-            grid[i][j] = input[i][j]
-
-    return grid
-
 def deployMonitoringStation(grid):
     w = len(grid[0])
     h = len(grid)
@@ -33,16 +20,6 @@ def deployMonitoringStation(grid):
                 #print("asteroids = {}, angles = {}".format(len(result)-1, result))
                 asteroids.append(len(result)-1)
     return max(asteroids)
-
-def calculatePoint(grid):
-    w = len(grid[0])
-    h = len(grid)
-    pts = 0
-    for i in range(h):
-        for j in range(w):
-            if grid[i][j] == '#':
-                pts += 1
-    return pts
 
 def findBlindSpot(grid,startX, startY):
     w = len(grid[0])
@@ -67,6 +44,16 @@ def findBlindSpot(grid,startX, startY):
                 asteroids.add(orientation + str(math.atan2(startY-y, startX-x)))
     return asteroids
 
+def initializeGrid(input):
+    w = len(input[0])
+    h = len(input)
+    grid = [[0 for x in range(w)] for y in range(h)]
+
+    for i in range(h):
+        for j in range(w):
+            grid[i][j] = input[i][j]
+    return grid
+    
 def readFile(filename):
     return open(filename, "r").read().split("\n")
     #return ".#..#\n.....\n#####\n....#\n...##".split("\n")
