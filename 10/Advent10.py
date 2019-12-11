@@ -1,10 +1,12 @@
 from copy import copy, deepcopy
+import math 
 
 def main():
     input = readFile("input.txt")
     grid = initializeGrid(input)
+    #print(grid)
     max = deployMonitoringStation(grid)
-    #print("maximum asteroids found : ", max)
+    print("maximum asteroids found : ", max)
 
 
 def initializeGrid(input):
@@ -22,19 +24,15 @@ def initializeGrid(input):
 def deployMonitoringStation(grid):
     w = len(grid[0])
     h = len(grid)
-    pts = []
+    asteroids = []
   
     for y in range(h):
         for x in range(w):
             if grid[y][x] == '#':
-                result = findBlindSpot(deepcopy(grid), x, y)
-                print(len(result))
-                #point = calculatePoint(result) - 1 #remove self
-                #pts.append(point)
-                #print("(x:{},y:{}) = {} found => {}".format(x,y,result, point))
-                
-
-    #return max(pts)
+                result = findBlindSpot(grid, x, y)
+                #print("asteroids = {}, angles = {}".format(len(result)-1, result))
+                asteroids.append(len(result)-1)
+    return max(asteroids)
 
 def calculatePoint(grid):
     w = len(grid[0])
@@ -49,22 +47,29 @@ def calculatePoint(grid):
 def findBlindSpot(grid,startX, startY):
     w = len(grid[0])
     h = len(grid)
-    asteroids = {}
+    orientation = ""
+    asteroids = set([])
     for y in range(h):
         for x in range(w):
-            if grid[x][y] == '#':
-                if x == startX:
-                    slope = (startY - y)
-                elif y == startY:
-                    slope = (startX - x)
+            if grid[y][x] == '#':
+                if startX == x:
+                    if startY < y:
+                        orientation = "D"
+                    else:
+                         orientation = "U"
+                elif startY == y:
+                    if startX < x:
+                        orientation = "R"   
+                    else:
+                        orientation = "L"
                 else:
-                    slope = (int((startY - y) / (startX - x)))
-                asteroids[slope] = (startY - y) + (startX - x)
+                    orientation = ""
+                asteroids.add(orientation + str(math.atan2(startY-y, startX-x)))
     return asteroids
 
 def readFile(filename):
-    #return open(filename, "r").read().split("\n")
-    return ".#..#\n.....\n#####\n....#\n...##".split("\n")
+    return open(filename, "r").read().split("\n")
+    #return ".#..#\n.....\n#####\n....#\n...##".split("\n")
 
 if __name__== "__main__":
     main()
