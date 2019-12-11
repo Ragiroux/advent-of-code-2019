@@ -87,11 +87,9 @@ def main2():
 
     while destoyedCounter < 200:
         asteroid = asteroidsList[i]
-        if grid[asteroid.y][asteroid.x] == '#':
-            grid[asteroid.y][asteroid.x] = "."
-            destoyedCounter += 1
-            lastAsteroid = asteroid
-            i -= 1
+        destoyedCounter += 1
+        lastAsteroid = asteroid
+        i -= 1
         
     print("Last asteroid to be destroyed = {} ; values = {}".format(lastAsteroid, lastAsteroid.x*100 + lastAsteroid.y))
     print("### END    ###")
