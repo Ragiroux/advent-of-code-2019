@@ -1,12 +1,13 @@
 from copy import copy, deepcopy
 import math 
 
-def main():
+def main1():
+    print("### PART 1 ###")
     input = readFile("input.txt")
     grid = initializeGrid(input)
-    #print(grid)
     max = deployMonitoringStation(grid)
     print("maximum asteroids found : ", max)
+    print("### END ###")
 
 def deployMonitoringStation(grid):
     w = len(grid[0])
@@ -58,5 +59,54 @@ def readFile(filename):
     return open(filename, "r").read().split("\n")
     #return ".#..#\n.....\n#####\n....#\n...##".split("\n")
 
+###############################################################################
+#
+#           PART 2
+#
+###############################################################################
+
+def main2():
+    print("### PART 2 ###")
+    #282: (x:22,y:19)
+    input = readFile("input.txt")
+    grid = initializeGrid(input)
+
+    w = len(grid[0])
+    h = len(grid)
+
+    result, coordinateX, coordinateY = laser(grid,22,19)
+    
+    print(len(result)-1)
+    print(result)
+
+    print("### END ###")
+
+def laser(grid,startX, startY):
+    w = len(grid[0])
+    h = len(grid)
+    orientation = ""
+    asteroids = set([])
+    asteroidsCoordinateX = set([])
+    asteroidsCoordinateY = set([])
+
+    for y in range(h):
+        for x in range(w):
+            if grid[y][x] == '#':
+                if startX == x:
+                    if startY < y:
+                        orientation = "D"
+                    else:
+                        orientation = "U"
+                elif startY == y:
+                    if startX < x:
+                        orientation = "R"   
+                    else:
+                        orientation = "L"
+                else:
+                    orientation = ""
+                asteroids.add(orientation + str(math.atan2(startY-y, startX-x)))
+    return asteroids, asteroidsCoordinateX, asteroidsCoordinateY
+
 if __name__== "__main__":
-    main()
+    main1()
+    main2()
