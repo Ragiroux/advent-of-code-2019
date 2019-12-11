@@ -75,19 +75,38 @@ def main2():
     h = len(grid)
 
     result, coordinateX, coordinateY = laser(grid,22,19)
-    
-    print(len(result)-1)
-    print(result)
+    piAngle = convertToPiAngle(result)
+    sortedPiAngle = sorted(piAngle)
+    print(sortedPiAngle)
+
+
 
     print("### END ###")
+
+def convertToAngle(str):
+  if "U" in str or "D" in str or "L" in str or "R" in str:
+    return float(str[1:])
+  else:
+    return float(str)
+
+def convertToPiAngle(result):
+  piAngle = []
+  for i in range(len(result)):
+    angle = convertToAngle(result.pop())
+    
+    if angle > 0:
+      piAngle.append(angle)
+    else:
+      piAngle.append(angle + 2 * math.pi)
+  return piAngle
 
 def laser(grid,startX, startY):
     w = len(grid[0])
     h = len(grid)
     orientation = ""
     asteroids = set([])
-    asteroidsCoordinateX = set([])
-    asteroidsCoordinateY = set([])
+    asteroidsCoordinateX = []
+    asteroidsCoordinateY = []
 
     for y in range(h):
         for x in range(w):
@@ -104,7 +123,11 @@ def laser(grid,startX, startY):
                         orientation = "L"
                 else:
                     orientation = ""
+
                 asteroids.add(orientation + str(math.atan2(startY-y, startX-x)))
+                asteroidsCoordinateX.append(x)
+                asteroidsCoordinateY.append(y)
+
     return asteroids, asteroidsCoordinateX, asteroidsCoordinateY
 
 if __name__== "__main__":
