@@ -8,8 +8,9 @@ class Asteroid(object):
       self.y = y
 
     def getPiAngle(self):
-      angle = self.__convertToAngle()
-      return angle if angle > 0 else angle + 2 * math.pi
+      #angle = self.__convertToAngle()
+      #return angle if angle > 0 else angle + 2 * math.pi
+      return self.__convertToAngle()
 
     def __convertToAngle(self):
       if "U" in self.angle or "D" in self.angle or "L" in self.angle or "R" in self.angle:
@@ -24,5 +25,5 @@ class Asteroid(object):
       return hash(self.angle)
 
     def __repr__(self):
-      return "({},{}) : {}".format(self.x, self.y, self.angle)
+      return "({},{}) : {}".format(self.x, self.y, self.__convertToAngle())
       
