@@ -1,5 +1,7 @@
-from copy import copy, deepcopy
+from Asteroid import Asteroid
+import numpy as np
 import math 
+
 
 def main1():
     print("### PART 1 ###")
@@ -7,7 +9,7 @@ def main1():
     grid = initializeGrid(input)
     max = deployMonitoringStation(grid)
     print("maximum asteroids found : ", max)
-    print("### END ###")
+    print("### END    ###")
 
 def deployMonitoringStation(grid):
     w = len(grid[0])
@@ -68,67 +70,63 @@ def readFile(filename):
 def main2():
     print("### PART 2 ###")
     #282: (x:22,y:19)
+    destoyedCounter = 0
+    lastAsteroid = Asteroid(0,0,0)
     input = readFile("input.txt")
     grid = initializeGrid(input)
 
-    w = len(grid[0])
-    h = len(grid)
+    asteroids = laser(grid,22,19)
 
-    result, coordinateX, coordinateY = laser(grid,22,19)
-    piAngle = convertToPiAngle(result)
-    sortedPiAngle = sorted(piAngle)
-    print(sortedPiAngle)
+    asteroids = sorted(asteroids, key=lambda a: a.getPiAngle(), reverse=False)
 
+    asteroidsList = list(asteroids)
 
+    closest = find_nearest(asteroidsList, math.pi/2)
 
-    print("### END ###")
+    i = find_index(asteroidsList, closest)
 
-def convertToAngle(str):
-  if "U" in str or "D" in str or "L" in str or "R" in str:
-    return float(str[1:])
-  else:
-    return float(str)
+    while destoyedCounter < 200:
+        asteroid = asteroidsList[i]
+        if grid[asteroid.y][asteroid.x] == '#':
+            grid[asteroid.y][asteroid.x] = "."
+            destoyedCounter += 1
+            lastAsteroid = asteroid
+            i -= 1
+        
+    print("Last asteroid to be destroyed = {} ; values = {}".format(lastAsteroid, lastAsteroid.x*100 + lastAsteroid.y))
+    print("### END    ###")
 
-def convertToPiAngle(result):
-  piAngle = []
-  for i in range(len(result)):
-    angle = convertToAngle(result.pop())
-    
-    if angle > 0:
-      piAngle.append(angle)
-    else:
-      piAngle.append(angle + 2 * math.pi)
-  return piAngle
+def find_nearest(array,value):
+  return min(array, key=lambda a: abs(a.getPiAngle()-value))
+
+def find_index(array, closest):
+  for i in range(len(array)):
+    if array[i] == closest:
+      return i
 
 def laser(grid,startX, startY):
     w = len(grid[0])
     h = len(grid)
     orientation = ""
     asteroids = set([])
-    asteroidsCoordinateX = []
-    asteroidsCoordinateY = []
 
     for y in range(h):
-        for x in range(w):
-            if grid[y][x] == '#':
-                if startX == x:
-                    if startY < y:
-                        orientation = "D"
-                    else:
-                        orientation = "U"
-                elif startY == y:
-                    if startX < x:
-                        orientation = "R"   
-                    else:
-                        orientation = "L"
+      for x in range(w):
+        if grid[y][x] == '#':
+            if startX == x:
+                if startY < y:
+                    orientation = "D"
                 else:
-                    orientation = ""
-
-                asteroids.add(orientation + str(math.atan2(startY-y, startX-x)))
-                asteroidsCoordinateX.append(x)
-                asteroidsCoordinateY.append(y)
-
-    return asteroids, asteroidsCoordinateX, asteroidsCoordinateY
+                    orientation = "U"
+            elif startY == y:
+                if startX < x:
+                    orientation = "R"   
+                else:
+                    orientation = "L"
+            else:
+                orientation = ""
+            asteroids.add(Asteroid(orientation + str(math.atan2(startY-y, startX-x)), x, y))
+    return asteroids
 
 if __name__== "__main__":
     main1()

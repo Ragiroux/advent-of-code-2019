@@ -9,28 +9,8 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "console": "integratedTerminal"
-        },
-        {
-            "type": "mix_task",
-            "name": "mix (Default task)",
-            "request": "launch",
-            "projectDir": "${workspaceRoot}"
-        },
-        {
-            "type": "mix_task",
-            "name": "mix test",
-            "request": "launch",
-            "task": "test",
-            "taskArgs": [
-                "--trace"
-            ],
-            "startApps": true,
-            "projectDir": "${workspaceRoot}",
-            "requireFiles": [
-                "test/**/test_helper.exs",
-                "test/**/*_test.exs"
-            ]
+            "console": "integratedTerminal",
+            "cwd": "${fileDirname}"
         }
     ]
 }
